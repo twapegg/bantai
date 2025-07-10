@@ -125,7 +125,7 @@ export default function Page() {
           className="mt-10 px-6 py-12 max-w-7xl mx-auto"
         >
           <h2 className="text-3xl font-bold text-center text-[#03585F] mb-4">
-            Keeping Your Child Safe Online at Every Stage
+            Keeping your child safe online at every stage
           </h2>
           <p className="text-lg text-center text-[#555] max-w-5xl mx-auto mb-12">
             Bant.ai helps your child discover the internet safely while giving you peace of mind every step of the way.
@@ -180,10 +180,10 @@ export default function Page() {
             {/* Right Content */}
             <div className="relative z-10 text-white p-8 md:p-12 w-full md:w-1/2 text-center md:text-left">
               <h2 className="text-3xl font-bold mb-4">
-                Ready to Get Started?
+                Ready to get started?
               </h2>
               <p className="text-lg mb-8 text-white/90">
-                Join Bant.ai and start protecting your child’s digital world today. It’s fast, free, and gives you peace of mind.
+                Sign up for Bant.ai today. It's easy, free, and gives you the tools to monitor and secure your child's online experience.
               </p>
 
               <div className="flex flex-col sm:flex-row sm:justify-start gap-4">
