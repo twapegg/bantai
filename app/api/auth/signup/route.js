@@ -7,15 +7,19 @@ export async function POST(request) {
   const { email, password, username } = await request.json();
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const user = userCredential.user;
 
     // Save user info to Firestore
     await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        email,
+      uid: user.uid,
+      email,
       username,
-      createdAt: new Date().toISOString()   
+      createdAt: new Date().toISOString(),
     });
 
     return NextResponse.json({ message: "Signup successful", username });
