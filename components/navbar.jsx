@@ -1,21 +1,32 @@
 "use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 import Link from "next/link";
 import { Home, Settings } from "lucide-react";
-import logo from './ui/elements/logotext.png';
 const navItems = [
   { label: "Home", href: "/", icon: <Home className="w-4 h-4" /> },
-  { label: "Settings", href: "/settings", icon: <Settings className="w-4 h-4" /> },
+  {
+    label: "Settings",
+    href: "/settings",
+    icon: <Settings className="w-4 h-4" />,
+  },
 ];
 
 export default function NavBar() {
   return (
     <div>
       <header>
-        <nav className={`bg-white pt-0 rounded-[100] pb-1 mb-10 mx-auto flex w-full items-center text-center justify-between`}>
+        <nav
+          className={`bg-white pt-0 rounded-[100] pb-1 mb-10 mx-auto flex w-full items-center text-center justify-between`}
+        >
           <Link href="/">
-            <Image className={'pl-5 py-2'} src={logo} alt="Logo" width={210} height={40} />
+            <Image
+              className={"pl-5 py-2"}
+              src="/logotext.png"
+              alt="Logo"
+              width={210}
+              height={40}
+            />
           </Link>
 
           <a
