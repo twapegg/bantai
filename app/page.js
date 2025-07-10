@@ -1,5 +1,5 @@
 import Image from "next/image";
-import DashboardPage from "./dashboard/dashboard";
+import DashboardPage from "./dashboard/page";
 
 export default function Home() {
   return (
