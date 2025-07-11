@@ -1,7 +1,7 @@
 "use client";
 // This is a client component because it uses useState for password visibility toggle
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { browserLocalPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase"; // Adjust the import path as necessary
 import { useRouter } from "next/navigation";
 import NavBar from "@/components/navbar";
@@ -32,6 +32,9 @@ export default function Login() {
         setMsgStatus('error');
         setMessage(data.message || "Login failed");
       }else{
+        await setPersistence(auth, browserLocalPersistence); // Simulates sessions persistence
+        
+        // Sign in the user with email and password
         await signInWithEmailAndPassword(auth, email, password);
         setMsgStatus('success');
         setMessage(data.message || "Login successful");

@@ -5,7 +5,7 @@ import NavBar from '@/components/navbar';
 import Link from 'next/link';
 import { Dawning_of_a_New_Day } from 'next/font/google';
 import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { setPersistence, browserLocalPersistence, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "@/lib/firebase"; // Adjust the import path as necessary
 
 
@@ -42,7 +42,9 @@ export default function Signup() {
         setMessage(data.error || "Signup failed");
         setMsgStatus('error');
       } else {
+        await setPersistence(auth, browserLocalPersistence); // Simulates sessions persistence
 
+        // Sign in the user with email and password
         await signInWithEmailAndPassword(auth, form.email, form.password);
         setMessage(data.message || "Signup successful");
         setMsgStatus('success');
