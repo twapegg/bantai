@@ -13,6 +13,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message,setMessage] = useState('');
+  const [msgstatus, setMsgStatus] = useState(''); //success or error message
   const router = useRouter();
 
   const handleLogin = async (e) => {
@@ -28,14 +29,17 @@ export default function Login() {
       console.log("Login response:", data);
 
       if (!res.ok) {
+        setMsgStatus('error');
         setMessage(data.message || "Login failed");
       }else{
         await signInWithEmailAndPassword(auth, email, password);
+        setMsgStatus('success');
         setMessage(data.message || "Login successful");
         router.push("/dashboard"); // Redirect to dashboard
       }
     } catch (error) {
       console.error("Login failed:", error);
+      setMsgStatus('error');
       setMessage("Something went wrong during login.");
     }
   };
@@ -113,7 +117,10 @@ export default function Login() {
                   )}
                 </button>
               </div>
-              {message && <div className="mb-4 rounded-md bg-red-100 p-2 text-sm text-red-700 border border-red-300 text-center">
+              {message && <div className={`mb-4 rounded-md p-2 text-sm border text-center 
+              ${ msgstatus === 'success' ? 'bg-green-100 text-green-700 border-green-300' : 
+                  'bg-red-100 text-red-700 border-red-300'
+                }`}>
                 {message}
                 </div>}
 

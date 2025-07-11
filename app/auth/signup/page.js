@@ -5,13 +5,18 @@ import NavBar from '@/components/navbar';
 import Link from 'next/link';
 import { Dawning_of_a_New_Day } from 'next/font/google';
 import { useRouter } from 'next/navigation';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "@/lib/firebase"; // Adjust the import path as necessary
+
 
 export default function Signup() {
   const [form, setForm] = useState({username: '', email: '', password: '', cpassword: ''});
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [cpasswordVisible, setCPasswordVisible] = useState(false);
   const [message,setMessage] = useState('');
+  const [msgstatus, setMsgStatus] = useState(''); //success or error message
   const router = useRouter();
+  
 
   const handlechange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});
@@ -20,7 +25,9 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.password !== form.cpassword) {
+      setMsgStatus('error');
       return setMessage("Passwords don't match");
+
     }
 
     try {
@@ -33,11 +40,17 @@ export default function Signup() {
 
       if (!res.ok) {
         setMessage(data.error || "Signup failed");
+        setMsgStatus('error');
       } else {
+
+        await signInWithEmailAndPassword(auth, form.email, form.password);
+        setMessage(data.message || "Signup successful");
+        setMsgStatus('success');
         router.push('/dashboard');
+
       }
     } catch (err) {
-      console.error(err);
+      setMsgStatus('error');
       setMessage("Something went wrong");
     }
   };
@@ -90,7 +103,12 @@ export default function Signup() {
                     )}
                 </button>
               </div>
-                {message && <div className="mb-4 rounded-md bg-red-100 p-2 text-sm text-red-700 border border-red-300 text-center">{message}</div>}
+                {message && <div className={`mb-4 rounded-md p-2 text-sm border text-center ${
+                  msgstatus === 'success' ? 'bg-green-100 text-green-700 border-green-300' : 
+                  'bg-red-100 text-red-700 border-red-300'
+                }`}>
+                {message}
+                </div>}
 
               {/*Signup button for form submission*/}
               <button className='w-full bg-linear-to-b rounded-full py-2 from-[#f1c3b1] to-[#eea571] hover:from-[#03585F] hover:to-[#41817C] hover:text-white font-semibold cursor-pointer"'>Sign up</button>
