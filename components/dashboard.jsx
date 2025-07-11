@@ -1040,11 +1040,19 @@ export default function Dashboard() {
                         </div>
                       </td>
                       <td className="px-6 py-5 text-sm text-gray-700 max-w-xs">
-                        <div className="truncate" title={event.contentSnippet}>
-                          {event.contentSnippet}
+                        <div className="group relative">
+                          <div className="truncate cursor-help">
+                            {event.contentSnippet}
+                          </div>
+                          {event.contentSnippet.length > 30 && (
+                            <div className="absolute z-[9999] invisible group-hover:visible bg-gray-900 text-white text-sm rounded-lg px-4 py-3 bottom-full left-1/2 transform -translate-x-1/2 mb-2 whitespace-normal max-w-md shadow-2xl border border-gray-700">
+                              {event.contentSnippet}
+                              <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                            </div>
+                          )}
                         </div>
                       </td>
-                      <td className="px-6 py-5 text-sm">
+                      <td className="px-6 py-5 text-sm  text-center ">
                         <span
                           className={`inline-flex px-3 py-2 rounded-full text-xs font-bold shadow-sm ${
                             event.label === "Violence"
