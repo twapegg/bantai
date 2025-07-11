@@ -43,9 +43,8 @@ export default function Signup() {
   };
 
   return(
-  <div className="min-h-screen">
-    <NavBar />
-      <div className="flex items-center justify-center bg-[#F8FAFD]">
+  <div>
+      <div className="flex min-h-screen items-center justify-center bg-[#F8FAFD]">
         <div className="flex h-120 w-250 border border-black/10 rounded-lg shadow-lg overflow-hidden">
           <div className='flex flex-col flex-1 bg-white items-center justify-center p-6'>
 
@@ -91,10 +90,10 @@ export default function Signup() {
                     )}
                 </button>
               </div>
-                {message && <div className="text-center text-sm mb-4 text-red-500">{message}</div>}
+                {message && <div className="mb-4 rounded-md bg-red-100 p-2 text-sm text-red-700 border border-red-300 text-center">{message}</div>}
 
               {/*Signup button for form submission*/}
-              <button className='w-full bg-linear-to-b rounded-full py-2 from-[#f1c3b1] to-[#eea571] cursor-pointer'>Login</button>
+              <button className='w-full bg-linear-to-b rounded-full py-2 from-[#f1c3b1] to-[#eea571] hover:from-[#03585F] hover:to-[#41817C] hover:text-white font-semibold cursor-pointer"'>Sign up</button>
             </form> 
           </div>
 
@@ -104,7 +103,7 @@ export default function Signup() {
               <h2 className="text-3xl font-bold mb-2">Have an account already?</h2>
               <p className="mb-4 text-sm">Access your account now.</p>
                 <Link className="border-2 w-50 font-bold text-center border-white rounded-full px-6 py-2 hover:bg-white hover:text-teal-700 transition cursor-pointer" 
-                 href='/auth/login'>Sign-in</Link>
+                 href='/auth/login'>Login</Link>
           </div>
         </div>
       </div>

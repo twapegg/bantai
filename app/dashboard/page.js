@@ -3,9 +3,32 @@
 import NavBar from "@/components/navbar.js";
 import * as React from "react";
 import { motion } from "framer-motion";
+import useAuth from "@/hooks/useAuth";
+import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
 
 export default function DashboardPage() {
+  const {user, loading} = useAuth();
   const [enabled, setEnabled] = React.useState(false);
+  const router = useRouter();
+
+
+  useEffect(() => {
+    if(!loading && user === null){
+      router.push('/auth/login'); // Redirect to login if user is not authenticated
+    }
+  }, [loading, user, router]);
+ 
+  {/*Loading screen for checking user authentication*/}
+  if(loading || user === undefined){
+    return(
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="w-12 h-12 border-4 border-t-transparent border-teal-600 rounded-full animate-spin"></div>
+        <p>Please wait a moment...</p>
+      </div>
+
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">

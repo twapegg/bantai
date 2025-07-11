@@ -6,34 +6,48 @@ import { auth } from "@/lib/firebase"; // Adjust the import path as necessary
 import { useRouter } from "next/navigation";
 import NavBar from "@/components/navbar";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message,setMessage] = useState('');
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard"); // Redirect to dashboard
+
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({email, password}),
+      });
+      const data = await res.json();
+      console.log("Login response:", data);
+
+      if (!res.ok) {
+        setMessage(data.message || "Login failed");
+      }else{
+        await signInWithEmailAndPassword(auth, email, password);
+        setMessage(data.message || "Login successful");
+        router.push("/dashboard"); // Redirect to dashboard
+      }
     } catch (error) {
       console.error("Login failed:", error);
-      alert("Invalid email or password.");
+      setMessage("Something went wrong during login.");
     }
   };
 
   return (
-    <div className="min-h-screen">
-      <NavBar />
-      <div className="flex items-center justify-center bg-[#F8FAFD]">
+    <div>
+      <div className="flex min-h-screen items-center justify-center bg-[#F8FAFD]">
         <div className="flex h-120 w-250 border border-black/10 rounded-lg shadow-lg overflow-hidden">
           <div className="flex flex-col flex-1 bg-white items-center justify-center p-6">
+
             {/*Header of the login */}
-            <h5 className="text-2xl font-bold mb-3 text-[#03585F]">
-              bant.<span className="text-[#EE9471]">ai</span>
-            </h5>
+            <Image src="/logo.png" alt="Logo" width={200} height={100} className="mb-4" />
             <h2 className="text-3xl font-bold"> Welcome Back!</h2>
             <p className="text-2 text-[#616161]">Login to your account</p>
 
@@ -99,11 +113,14 @@ export default function Login() {
                   )}
                 </button>
               </div>
+              {message && <div className="mb-4 rounded-md bg-red-100 p-2 text-sm text-red-700 border border-red-300 text-center">
+                {message}
+                </div>}
 
               {/*Login Button for form submission*/}
               <button
                 type="submit"
-                className="w-full bg-linear-to-b rounded-full py-2 from-[#f1c3b1] to-[#eea571] cursor-pointer"
+                className="w-full bg-linear-to-b rounded-full py-2 from-[#f1c3b1] to-[#eea571] hover:from-[#03585F] hover:to-[#41817C] hover:text-white font-semibold cursor-pointer"
               >
                 Login
               </button>
@@ -126,7 +143,7 @@ export default function Login() {
               className="border-2 w-50 font-bold text-center border-white rounded-full px-6 py-2 hover:bg-white hover:text-teal-700 transition cursor-pointer"
               href="/auth/signup"
             >
-              Sign-in
+              Sign up
             </Link>
           </div>
         </div>
